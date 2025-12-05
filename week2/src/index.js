@@ -10,7 +10,9 @@ app
   .use(logger("dev"));
 
 app
-  .get("/", (req, res) => res.send("Hello World!"))
+  .get("/", (req, res) => {
+    res.send("Hello World!");
+  })
   .get("/name/:name", ({ params: { name } }, res) =>
     res.send(`Hello, ${name}!`)
   )
@@ -20,14 +22,16 @@ app
       <p>ได้รับข้อความจาก IP: ${ip}</p>
       `);
   })
-  .get("/readparam", ({ query: { name, id } }, res) => {
-    console.log(`Name: ${name}`);
-    console.log(`ID: ${id}`);
-    res.type("html").send(`
-      <h1> Hello ${name} :id ${id}</h1>
-      <h3>จาก 6630250435 วรินทร์ สายปัญญา</h3>
+  .get(
+    "/readparam",
+    ({ query: { name = "ไม่ระบุชื่อ", id = "ไม่ระบุID" } }, res) => {
+      console.log(JSON.stringify({ name, id }));
+      res.type("html").send(`
+      <h1>Hello ${name} :id ${id}</h1>
+      <h3>จาก วรินทร์ สายปัญญา : 6630250435</h3>
       `);
-  })
+    }
+  )
   .post("/data", (req, res) => res.send(req.body))
   .use((req, res) => res.status(404).send("Not Found!"))
   .listen(port, () =>

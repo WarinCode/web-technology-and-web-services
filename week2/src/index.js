@@ -14,7 +14,22 @@ app
   .get("/name/:name", ({ params: { name } }, res) =>
     res.send(`Hello, ${name}!`)
   )
+  .get("/ip", ({ ip }, res) => {
+    res.send(`
+      <h1>LAB02</h1>
+      <p>ได้รับข้อความจาก IP: ${ip}</p>
+      `);
+  })
+  .get("/readparam", ({ query: { name, id } }, res) => {
+    console.log(`Name: ${name}`);
+    console.log(`ID: ${id}`);
+    res.type("html").send(`
+      <h1> Hello ${name} :id ${id}</h1>
+      <h3>จาก 6630250435 วรินทร์ สายปัญญา</h3>
+      `);
+  })
   .post("/data", (req, res) => res.send(req.body))
+  .use((req, res) => res.status(404).send("Not Found!"))
   .listen(port, () =>
     console.log(`Server is running on http://localhost:${port}`)
   );

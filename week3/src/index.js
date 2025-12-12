@@ -11,6 +11,16 @@ const students = [
     name: "สมชาย สายลม",
     age: 20,
   },
+  {
+    id: "002",
+    name: "สมหญิง จริงใจ",
+    age: 19,
+  },
+  {
+    id: "6630250435",
+    name: "วรินทร์ สายปัญญา",
+    age: 21,
+  },
 ];
 
 app
@@ -19,7 +29,7 @@ app
   .get("/", (req, res) => res.send("Hello World!"))
   .get("/students", (req, res) => {
     // res.json(students);
-    const { id, name } = students[0];
+    const { id, name } = students[students.length - 1];
     res.type("json").status(200).json({ id, name });
   })
   .post("/students", ({ body }, res) => {

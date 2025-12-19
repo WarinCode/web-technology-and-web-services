@@ -16,7 +16,6 @@ pool
     app
       .get("/", (req, res) => res.status(200).json({ message: "ok" }))
       .get("/products", async (req, res) => {
-        pool.connect();
         try {
           const query = "SELECT * FROM products";
           const result = await pool.query(query);

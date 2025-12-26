@@ -27,6 +27,19 @@ const productController = {
   postProduct: async ({ body }, res) => {
     try {
       const { pdId, pdName, pdPrice, pdTypeId, brandId } = body;
+      if (!pdId || !pdName) {
+        res.status(422).json({ error: "Error pdId and pdName is required" });
+        return;
+      }
+      const chkRow = await database.query({
+        text: 'SELECT * FROM products WHERE "pdId" = $1',
+        values: [pdId],
+      });
+      if (chkRow.rowCount >= 1) {
+        res.status(409).json({ error: `Error pdId ${pdId} is exists` });
+        return;
+      }
+
       const result = await database.query({
         text: 'INSERT INTO products ("pdId", "pdName", "pdPrice", "pdTypeId", "brandId") VALUES ($1, $2, $3, $4, $5)',
         values: [pdId, pdName, pdPrice, pdTypeId, brandId],

@@ -24,6 +24,16 @@ pool
           res.status(500).json({ error: err.message });
         }
       })
+      // .get("/students", (req, res) => {
+      //   try {
+      //     const query = "SELECT * FROM students";
+      //     const result = pool.query(query);
+      //     console.log(result);
+      //     res.status(200).json(result);
+      //   } catch (err) {
+      //     res.status(500).json({ error: err.message });
+      //   }
+      // })
       .get("/students", async (req, res) => {
         try {
           const query = "SELECT * FROM students";

@@ -51,8 +51,6 @@ const products = ref([
             </div>
         </div>
     </div>
-
-
 </template>
 
 <style scoped></style>

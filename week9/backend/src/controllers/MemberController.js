@@ -6,7 +6,7 @@ export default class MemberController {
   async postMember({ body: { memEmail, memName, password } }, res) {
     try {
       if (!memEmail || !memName) {
-        res.json({
+        re.status(422).json({
           message: "ERROR memEmail and memName is required.",
           regist: false,
         });
@@ -18,7 +18,7 @@ export default class MemberController {
         values: [memEmail],
       });
       if (rowCount !== 0) {
-        res.json({
+        res.status(409).json({
           message: `ERROR memEmail ${memEmail} is exists.`,
           regist: false,
         });
@@ -32,7 +32,7 @@ export default class MemberController {
         text: `INSERT INTO "members"("memEmail", "memName", "memHash") VALUES($1, $2, $3)`,
         values: [memEmail, memName, pwdHash],
       });
-      res.json({
+      res.status(201).json({
         memName,
         memEmail,
         pwdHash,
@@ -41,7 +41,7 @@ export default class MemberController {
         regist: true,
       });
     } catch (err) {
-      res.json({ message: err?.message, regist: false });
+      res.status(500).json({ message: err?.message, regist: false });
     }
   }
 
@@ -49,7 +49,7 @@ export default class MemberController {
   async loginMember({ body: { loginName, password } }, res) {
     try {
       if (!loginName || !password) {
-        res.json({ message: "ERROR loginName and password is required." });
+        res.status(422).json({ message: "ERROR loginName and password is required." });
         return;
       }
 
@@ -58,18 +58,18 @@ export default class MemberController {
         values: [loginName],
       });
       if (rowCount === 0) {
-        res.json({ message: `Login Fail`, login: false });
+        res.status(409).json({ message: `Login Fail`, login: false });
         return;
       }
 
       const loginOK = await bcrypt.compare(password, rows[0].memHash);
       if (loginOK) {
-        res.json({ message: `Login Success`, login: true });
+        res.status(200).json({ message: `Login Success`, login: true });
       } else {
-        res.json({ message: `Login Fail`, login: false });
+        res.status(200).json({ message: `Login Fail`, login: false });
       }
     } catch (err) {
-      res.json({ message: err?.message });
+      res.status(500).json({ message: err?.message });
     }
   }
 }

@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 
 const memEmail = ref(null);
@@ -29,7 +29,10 @@ const handleSubmit = async () => {
         }
     }
     catch (err) {
-        console.error(err)
+        if (err instanceof AxiosError){
+            regist.value = false;
+            message.value = err.message;
+        }
     }
 }
 </script>

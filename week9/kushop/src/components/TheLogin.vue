@@ -16,6 +16,8 @@ const handleSubmit = async () => {
         login.value = data.login;
         message.value = data.message;
     } catch (err) {
+        login.value = false;
+        message.value = err.message;
         console.error(err);
     }
 }

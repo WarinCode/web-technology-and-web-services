@@ -63,6 +63,16 @@ const memLogout = async () => {
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <router-link to="/">
+                            <div class="nav-link" href="#">Home</div>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/product">
+                            <div class="nav-link" href="#">Product</div>
+                        </router-link>
+                    </li>
                     <li class="nav-item" v-if="login">
                         <router-link to="/pagemember" style="text-decoration: none">
                             <div class="nav-link fw-bold">{{ memName }}</div>
